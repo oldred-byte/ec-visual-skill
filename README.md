@@ -1,54 +1,66 @@
-# EC Visual Skill
+# EC Visual Skill 🛒✨
 
-EC Visual is a Codex skill for creating e-commerce visual systems from product
-images and visual references.
+让 Codex 帮你把「产品图 + 参考图」整理成一套完整的电商视觉生产流程。
 
-It helps an agent analyze references, adapt the visual direction to the actual
-product, plan marketplace head images and product detail-page screens, write
-generation prompts, validate outputs, regenerate failed images, and save the
-final deliverables.
+它适合用来做商品主图、详情页分屏、参考图拆解、生成提示词，以及成套图片的检查和返工。你给它产品和参考，它会像一个耐心的电商视觉导演一样，先看清楚产品，再拆参考，再安排每一张图该承担什么销售任务。
 
-## What It Produces
+## ✨ 它能做什么
 
-By default, the skill plans a complete e-commerce visual set:
+- 规划 **5 张电商主图**
+- 规划 **10 屏竖版详情页**
+- 分析参考图的布局、镜头、文字节奏和商业气质
+- 根据产品重新适配颜色和视觉系统
+- 为每张图写独立的生成 prompt
+- 生成后检查产品一致性、文字可读性、风格稳定性
+- 对失败图片进行 prompt 修正和重新生成
+- 保存最终图片和验证记录
 
-- 5 square marketplace head images
-- 10 vertical product detail-page screens
-- Reference analysis
-- Product-adapted color system
-- One generation prompt per final image
-- Validation and regeneration guidance
+## 🧭 它怎么工作
 
-When the user asks for final image deliverables, the workflow expects each image
-to be generated as an independent model-native bitmap, then checked and saved as
-a separate file.
+1. **读取素材**  
+   识别产品图、参考图、产品事实和目标用途。
 
-## Core Workflow
+2. **拆解参考图**  
+   提取参考图里的布局逻辑、镜头语言、留白、字体层级、商业氛围。
 
-1. Inspect product images and reference images.
-2. Classify what each reference can contribute.
-3. Extract the reference flavor: camera attitude, layout rhythm, typography,
-   whitespace, commercial genre, and product-human relationship.
-4. Rebuild the color and visual system around the real product.
-5. Plan 5 head images, each with its own sales role.
-6. Plan 10 detail-page screens as a coherent purchase narrative.
-7. Write one prompt per image or screen.
-8. Generate, validate, diagnose failures, regenerate, and save final files.
+3. **建立产品规则**  
+   产品外观、颜色、材质、结构、使用方式优先保持准确。
 
-## Important Principles
+4. **规划 5 张主图**  
+   首图、卖点图、场景图、细节图、信任收尾图，各自有清楚任务。
 
-- Product accuracy outranks reference style.
-- References are not templates to copy blindly.
-- Do not copy reference brands, prices, original text, certifications, people,
-  or product-specific claims.
-- Do not invent medical effects, official certifications, test results, prices,
-  or brand authorization.
-- Every visible claim should be supported by the product image or by user-
-  supplied product facts.
-- Final commercial images should come directly from the image model, not from
-  local text overlays or deterministic compositing.
+5. **规划 10 屏详情页**  
+   用连续页面组织购买叙事，从吸引、解释、证明到收口。
 
-## Repository Structure
+6. **逐张写 prompt**  
+   一张图一条 prompt，方便控制，也方便单张返工。
+
+7. **生成、检查、修正**  
+   看产品有没有变形、文案是否安全、中文是否清楚、整体是否重复。
+
+8. **保存成品**  
+   最终图片按主图和详情页分别保存，contact sheet 只作为预览辅助。
+
+## 📦 默认输出
+
+如果只需要方案，它会输出：
+
+- 参考图角色分析
+- 参考风格提取
+- 产品适配配色
+- 5 张主图规划表
+- 10 屏详情页规划表
+- 15 条生成 prompt
+
+如果需要直接出图，它会继续完成：
+
+- 逐张调用图片生成
+- 逐张检查
+- 对不合格图片返工
+- 保存独立图片文件
+- 生成验证说明
+
+## 🧱 仓库结构
 
 ```text
 .
@@ -63,22 +75,32 @@ a separate file.
     └── reference-analysis.md
 ```
 
-## Installation
+## ⚠️ 使用边界
 
-Copy this folder into your Codex skills directory:
+这个 skill 会尽量保护商业视觉的准确性和安全性：
+
+- 不编造价格、认证、检测结果、医疗效果
+- 不复制参考图的品牌、原文案、人物和具体承诺
+- 不为了追参考风格牺牲产品准确性
+- 不把 contact sheet 当成最终交付图
+- 不用本地贴字或拼图修补最终商业图
+
+## 🚀 安装方式
+
+复制到 Codex skills 目录：
 
 ```bash
 cp -R ec-visual ~/.agents/skills/ec-visual
 ```
 
-If you clone this repository directly, you can also symlink it:
+如果你是直接 clone 这个仓库，也可以用软链接：
 
 ```bash
 ln -s "$(pwd)" ~/.agents/skills/ec-visual
 ```
 
-Then restart Codex or reload skills if your environment requires it.
+然后重启 Codex，或按你的环境重新加载 skills。
 
-## License
+## 🪪 License
 
 MIT
