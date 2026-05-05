@@ -1,0 +1,4 @@
+.DS_Store
+输出/
+generated-images/
+*.log

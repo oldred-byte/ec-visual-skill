@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ecommerce Visual Set"
+  short_description: "Generate, validate, and iterate product head images and detail pages from product and reference images."
+  default_prompt: "Create a complete e-commerce visual set from my product image and reference image(s): analyze the references, generate 5 head images and 10 detail-page screens, validate the outputs, iterate failed images, and save the final deliverables with a validation report."
