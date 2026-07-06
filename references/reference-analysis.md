@@ -23,7 +23,7 @@ Poster references may transfer:
 Poster references may not override:
 
 - The first head-image marketplace skeleton when no clear first head-image reference exists.
-- Product-adapted color rules.
+- Brand/product-adapted color rules.
 - Claim safety and user-provided facts.
 - Product-use plausibility. If the reference product is held or used in a way that does not fit the target product category, translate the intent, not the pose.
 
@@ -33,7 +33,7 @@ Do not let that sentence become a generic-template excuse. "Borrowing poster moo
 
 ## Flavor Contract
 
-Before planning images, write a short flavor contract for the strongest reference image.
+Before planning images, write a short flavor contract for the strongest reference image. For set-wide consistency and per-screen reference weight, also use `visual-dna.md`.
 
 Analyze these dimensions:
 
@@ -48,17 +48,26 @@ Analyze these dimensions:
 
 Then decide:
 
-- Must preserve:
+- Must preserve (light/type/density/mood — language only):
 - Can adapt:
-- Must not preserve:
+- Must NOT preserve (specific scene elements — see Reference Is Language Not Scene):
 - What would make the output lose the flavor:
 
-Example for a clean lifestyle poster with a smiling model holding a toothbrush close to camera:
+## Reference Is Language, Not Scene (critical rule — see visual-dna.md for full text)
 
-- Must preserve: low-angle hand-held hero, person/product scale drama, clean white space, confident smile/outing mood, bold sparse type.
-- Can adapt: product category, copy, product color, exact hand pose.
-- Must not preserve: brand logo, original product, exact model, bottom wordmark.
-- Flavor loss risk: turning it into a generic rainy scene, adding many badges/cards, shrinking the person-product relationship, making it look like ordinary Taobao modules.
+The flavor contract captures the reference's visual **language**. It does NOT capture the reference's **scene**. These are separate dimensions:
+
+- **Language** (inheritable): light behavior, typography attitude, density rhythm, commercial temperature, module rhythm, color relationship logic.
+- **Scene** (NOT inheritable by default): specific fabric, specific surface, specific location, specific background pattern, specific decorative props.
+
+When writing the flavor contract, explicitly list the reference's scene elements separately and mark them as "may appear in at most 30% of outputs". This prevents the model from defaulting to "use the reference's scene everywhere".
+
+Example for a baby-food reference image showing a picnic-cloth-on-grass scene with bold sans-serif Chinese headline and soft daylight:
+
+- Must preserve (language): soft daylight, bold sans-serif headline attitude, generous whitespace, calm warm commercial temperature.
+- Can adapt: product category, copy, color (rebuilt around product/brand).
+- Must NOT preserve (scene): picnic cloth, grass surface, park setting, decorative botanical props. These may appear in at most 30% of outputs (e.g., 1 of 5 head images, or 3 of 10 detail screens).
+- Flavor loss risk: copying the picnic-cloth scene across all outputs. Two screens with the same light and type but different scenes still feel like the same campaign; ten screens with the same picnic cloth and different copy do not.
 
 ## Product-Use Plausibility Map
 
@@ -72,6 +81,12 @@ Analyze:
 - Which reference gestures must be translated into a product-appropriate equivalent.
 - What visual result would immediately feel fake, awkward, unsafe, or like "no real person would do this".
 
+Reference action is not a pose template. First identify the action's intent, then translate it through the target product's real use logic:
+
+| Reference action | Intended effect | Target-product equivalent | Forbidden transfer |
+|---|---|---|---|
+| What the reference person/object does | hero scale, intimacy, ease, confidence, proof, scene realism | how the target product can express the same effect naturally | copied pose or grip that would make the product look awkward, unsafe, or fake |
+
 Examples:
 
 - A toothbrush or hair dryer can be pushed toward camera in one hand because that is a plausible product-in-hand hero pose.
@@ -79,6 +94,8 @@ Examples:
 - A skincare bottle can be held near the face, but a heavy appliance may need countertop support or a natural grip.
 
 If the desired reference flavor conflicts with realistic product use, preserve the emotion, camera attitude, whitespace, and typography first, then redesign the human-product pose.
+
+Do not add a person by default. Use a person only when the screen's core message needs use, fit, scale, emotion, audience identification, comfort, taste acceptance, or scene credibility. If the best proof is macro material, parameter clarity, product structure, ingredient logic, or product set display, keep the image product-led.
 
 ## Transfer Permissions
 
@@ -92,11 +109,13 @@ Product image does not permit unless requested:
 
 Reference images permit:
 
-- Layout skeleton, information hierarchy, reading order, content combination logic, creative methods, module rhythm, typography style, proof method, scene type.
+- Layout skeleton, information hierarchy, reading order, content combination logic, creative methods, module rhythm, typography style, proof method.
+- Visual language: light behavior, type attitude, density rhythm, commercial temperature.
 
-Reference images do not permit by default:
+Reference images do NOT permit by default:
 
-- Brand/logo, original copy, price, certification names, people, exact product scene, category-specific claims, dominant color if it does not fit the product.
+- Brand/logo, original copy, price, certification names, people (unless chosen as model source), category-specific claims, dominant color if it does not fit the product.
+- **Specific scene elements** (fabric, surface, location, background pattern, decorative props) — these are subject to the Scene Cap rule: at most 30% of outputs in a set may use any one reference-scene element. The rest must use a different scene.
 
 Reference people may be used only when the user chooses the reference-image model as the model source or explicitly asks to keep that model identity.
 
@@ -164,6 +183,8 @@ Before using any prominent reference feature, answer:
 
 Do not repeat the same prominent feature across all outputs by default.
 
+For full-set consistency, distribute reference features through `visual-dna.md`: each output should carry selected DNA elements without mechanically repeating the same composition, card, badge, action, or module.
+
 ## Taste Gap Audit
 
 After a first generation pass, compare outputs to the reference on the flavor contract, not only on layout and colors.
@@ -177,5 +198,9 @@ Ask:
 - Did information density drift too high or too low?
 - Did safety rules remove claims but also flatten the visual idea?
 - Are we using scene clichés instead of the reference's creative method?
+- **Did we accidentally copy the reference's specific scene elements (fabric, surface, location) across most/all outputs?** If yes, this is the #1 root-cause failure mode. Re-plan with the Scene Cap rule.
+- **Did the 5 head images / 10 detail screens actually achieve main-visual diversity, or do they all look like the same picture with different copy?** Check the diversity board against the threshold.
+- **Did each screen pass the Picture Solo Test, or does the headline do the work the picture should be doing?**
+- **Did any icons/pictograms slip in?** If yes, regenerate without them.
 
 If the answer is no, patch prompts or skill rules before continuing.

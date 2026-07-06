@@ -1,138 +1,102 @@
 ---
 name: ec-visual
-description: "Use when the user uploads product images and visual references to create 5 marketplace head images and 10 product detail page screens with reference analysis, product-adapted color, planning, prompts, and optional final images."
+description: "Use when the user uploads product images and visual references to create or improve marketplace head images and product detail pages. Includes consumer-angle mapping, fixed-screen detail-page expression planning, visual proof selection, brand/product-adapted color, prompts, and optional final image generation."
 ---
 
 # EC Visual
 
 ## Overview
 
-Create a complete e-commerce visual set from product image(s) and visual reference(s): 5 square marketplace head images and 10 vertical detail-page screens. The skill is a closed-loop production workflow: analyze references, generate, validate, regenerate, and feed reusable failures back into the skill before reporting completion. References provide layout logic, information structure, creative methods, and visual rhythm without mechanically copying their products, colors, brands, prices, people, or claims.
+Create e-commerce visual systems from product image(s), reference image(s), and optional product facts: 5 marketplace head images and/or 10 vertical detail-page screens. References are used as visual language sources, not rigid templates. Product facts, any user-approved screen directions, and each screen's consumer-facing expression task decide the content; reference DNA, product/brand color, and proof grammar decide how the set stays coherent and commercially useful.
 
 ## When To Use
 
 Use this skill when the user asks to:
 
-- Generate product head images, Taobao/Tmall/JD/Douyin main images, product main images, or marketplace listing images from product + reference images.
-- Generate a complete set containing both 5 head images and 10 detail-page screens.
-- Turn product images plus a poster/head-image/detail-page reference into planned image prompts or final images.
-- Build reusable prompts for e-commerce visuals from visual references.
+- Generate product head images, Taobao/Tmall/JD/Douyin main images, product main images, or marketplace listing images.
+- Generate detail-page screens or a complete set containing both 5 head images and 10 detail-page screens.
+- Turn product images plus poster/head-image/detail-page references into planned image prompts or final images.
+- Build reusable e-commerce visual prompts from product facts, documents, and visual references.
 
-If the user asks only for a single generated image, still use the relevant reference rules from this skill when the task is e-commerce product imagery.
-
-## Required Inputs
-
-Identify what the user provided:
-
-- Product image(s): define product appearance, color, material, packaging, structure, logo/packaging text if visible.
-- Reference image(s): may be first head-image reference, head-image set reference, detail-page reference, poster reference, or mood/style reference.
-- Product facts: name, category, specs, selling points, target users, usage scenes, price/promo. Do not invent missing facts.
-- Model source when people appear: whether human images should use a model from the reference image, a model from the product image, or a newly generated campaign model.
-
-When important facts are missing, make conservative generic claims or ask only if the omission prevents the work. For clothing, apparel, wearable fashion, or any product where the model is part of the product presentation, ask one question before planning or generation if the user has not specified the model source: "人物用参考图模特、产品图模特，还是重新生成模特？" Never invent prices, certifications, test results, medical effects, official stores, or brand authorization.
-
-Use the visible-evidence rule: if a benefit is not visible in the product image and not provided by the user, do not state it as a specific capability. Category-generic copy is allowed only when phrased softly. For example, an umbrella can use "rainy-day commute" or "easy to carry", but cannot claim "UPF 50+", "sun-rain dual use", "stormproof", "automatic open/close", or "water-repellent coating" unless visible or supplied.
+If the user asks for only one e-commerce image, still use the relevant input, reference, color, product-use, and visual-proof rules.
 
 ## Workflow
 
-1. Inspect all images and classify each reference role using `references/reference-analysis.md`.
-2. Extract a flavor contract from the strongest reference image: camera attitude, human/product relationship, whitespace tension, typography behavior, density, and commercial genre. Do not reduce a reference to surface labels like "white background" or "big product".
-3. Build a model-consistency plan when any image will contain people: choose the model source, lock a stable model identity/persona, and keep all recurring model appearances consistent across head images and detail pages while allowing pose, gesture, crop, camera angle, expression intensity, and product interaction to change by image role.
-4. Build a product-use plausibility map: how the product is normally held, worn, opened, applied, placed, or operated; which poses are impossible or awkward; which reference gestures must be translated rather than copied.
-5. Build the product-adapted color system using `references/color-adaptation.md`.
-6. Plan the 5 head images using `references/head-images.md`. If a poster/mood reference is the strongest reference, include a 5-image flavor transfer matrix before prompts so image 2-5 inherit the reference flavor instead of drifting into generic selling-point templates.
-7. Plan the 10 detail-page screens using `references/detail-pages.md`.
-8. Output planning tables first unless the user explicitly asked to directly generate.
-9. For generation, write one prompt per image/screen. Use the imagegen skill/tool for bitmap generation.
-10. When maturing or validating this skill, generate the full requested batch because many failures only appear across the set: continuity drift, repeated modules, inconsistent claims, ratio spread, typography/layout drift, and detail-page narrative gaps. Key samples are only optional preflight checks for obvious direction errors; they do not replace full-batch validation.
-11. Save final generated images into the current project folder in clear subfolders, for example `输出/头图` and `输出/详情页`.
-12. Use `references/production-loop.md` for validation, regeneration, and skill feedback. Self-check results: product consistency, text readability, color adaptation, reference-element overuse, layout logic, flavor match, product-use plausibility, and claim safety. Regenerate flawed images and patch reusable rules before calling the deliverable done.
+1. Inspect all product images, reference images, and uploaded documents. Classify image roles with `references/reference-analysis.md`.
+2. Route product information with `references/input-routing.md`: if the user uploaded only images and no product facts, ask once whether they have selling points, product information, brand colors, parameters, or documents to provide before planning. Complete facts are followed, partial facts are preserved and improved, missing facts are inferred conservatively from product image and category context.
+3. Capture any user-provided page structure or screen directions as hard scaffolding. Do not replace an approved 10-screen direction with a new generic sequence; translate each fixed screen direction into a stronger consumer-facing expression.
+4. Build a consumer-angle map with `references/input-routing.md`: category anxieties, desired outcomes, body/use moments, objections, and what evidence would make a buyer believe each point.
+5. Extract a set-level visual DNA contract from the strongest reference(s) using `references/visual-dna.md`. Treat the reference as visual language only (light behavior, typography attitude, density rhythm, commercial temperature). Reference scene/setting elements (specific fabric, specific surface, specific location, specific background texture) are NOT inherited by default and may appear in at most 30% of outputs.
+6. Build the color system with `references/color-adaptation.md`: user-provided brand colors first when supplied, otherwise product identity colors first. Reference colors are borrowed only as organization logic unless they fit the product/brand.
+7. Build product-use plausibility, interaction translation, claim safety, and model consistency plans with `references/reference-analysis.md`.
+8. For every image/screen, write a Picture Solo Statement first using `references/visual-proof-grammar.md`: one sentence describing the concrete picture, followed by what message it proves when all copy is covered. If the picture cannot convey the message alone, redesign the picture before continuing.
+9. Decide product presence per screen using `references/message-picture-patterns.md`: match the screen's message to a pattern, then follow that pattern's product-exposure rule. The product does NOT appear by default; it appears only when the message requires it.
+10. **Unified Plan + Approval Gate (mandatory)**: Plan head images and detail pages TOGETHER as one batch. Output ONE unified approval table that covers all 5 head images AND all 10 detail-page screens — each row containing: picture solo statement, pattern match, main subject, product exposure, scene setting, AND draft consumer-voice copy. User reviews this single table and approves or modifies before ANY prompt is written or ANY image is generated. Do not split head-image approval from detail-page approval. See `references/head-images.md` and `references/detail-pages.md` for table structure. Skip only when the user explicitly says to skip review.
+11. For final image deliverables, write one prompt per image/screen and use the image generation tool. Follow `references/production-loop.md` for generation, validation, regeneration, saving, reporting, and the post-iteration skill-learning hook.
 
 ## Direct Generation Contract
 
-When the user asks to make actual image deliverables, use this production path:
+When the user asks to make actual image deliverables:
 
-1. Call the `imagegen` skill/tool for the final commercial visual.
-2. Generate each requested deliverable as its own image: one prompt for one head image or one detail-page screen.
-3. Save generated results from the default generated-images folder into the project output folder:
-   - Head images: `输出/主图/01-...png` through `输出/主图/05-...png`.
-   - Detail pages: `输出/详情页/01-...png` through `输出/详情页/10-...png`.
-4. Use contact sheets only after the independent final files exist, as review artifacts named like `主图_contact_sheet.jpg` and `详情页_contact_sheet.jpg`.
-5. Do not use deterministic local compositing, local text overlay, or local image repair on final deliverables. Final head images and detail screens must come directly from the image model. Local tools may only copy/save files, inspect dimensions, and assemble contact sheets for review artifacts.
-6. Validate every saved file before reporting completion: file exists, aspect ratio is correct, product is accurate, visual quality is commercial, copy is readable/safe, and the image role matches the plan.
-
-## Autonomous Delivery Loop
-
-When the user asks for actual image deliverables, do not stop after planning, prompt writing, or a single failed/partial generation. Run an autonomous delivery loop:
-
-1. Read and follow `references/production-loop.md`.
-2. Optionally use key samples as preflight for obvious direction errors.
-3. Generate the full requested batch for validation, with one final file per requested image or screen.
-4. Validate the complete set, then repair prompts or skill rules based on batch-level failures.
-5. Regenerate the full batch or failed slices as needed, depending on whether the failure is systemic or isolated.
-6. Validate the full set visually, regenerate failed images individually, and feed reusable failures back into the skill.
-7. Report completion only when requested files exist on disk, pass validation, and the validation report is saved. If the set cannot pass after the allowed loop count, report failure and the exact blocker.
-
-Prompts for final deliverables should explicitly say "single independent final
-image only" or "single independent detail-page screen only" so the image model
-returns the delivery shape needed for saving and validation.
-
-When testing or validating this skill, if the user requested real output, use the same autonomous delivery loop. A dry pass is only acceptable when the user explicitly asks for analysis, planning, or prompt design instead of generated deliverables.
-
-For generated detail pages, check aspect ratio before anything else. Detail pages must be strict 3:4 vertical; if the image generator returns 9:16 or any other ratio, regenerate with stronger aspect wording. If Chinese text or typography does not match the intended poster/detail-page layout, regenerate with clearer copy hierarchy and layout direction.
-
-## Model-Native Text Workflow
-
-Final commercial outputs must rely on the image model for all visible image content, including Chinese text, typography, and commercial layout. Treat model-native multi-text poster generation as the default production path.
-
-If direct generation produces incorrect Chinese, weak hierarchy, or unsatisfactory typography, repair by strengthening the prompt's copy hierarchy, font direction, spacing, module rhythm, and poster/detail-page layout requirements, then regenerate. Do not add, correct, replace, or repair text with PIL, HTML/CSS screenshots, local drawing, masks, inpainting outside the model, or any other deterministic compositor.
+- **Create a task folder first** before any generation. Default location: `~/Desktop/`. Folder name format: `YYYYMMDD-HHMM-<产品名或类别>` (e.g., `20260705-1730-英式辅食`). All outputs for this task go ONLY into this folder. Never write into a folder containing previous-task files. See `references/production-loop.md` for full Task Folder Isolation rules.
+- Generate each requested deliverable as its own independent model-native image.
+- Save head images as `<task-folder>/主图/01-*.png` through `<task-folder>/主图/05-*.png`.
+- Save detail pages as `<task-folder>/详情页/01-*.png` through `<task-folder>/详情页/10-*.png`.
+- Save contact sheets to `<task-folder>/记录/`, validation report to `<task-folder>/验证报告.md`.
+- Use contact sheets only as review artifacts after independent final files exist.
+- Do not use deterministic local compositing, local text overlay, local retouching, or local layout repair on final deliverables.
+- Validate each file and the full set before reporting completion.
 
 ## Non-Negotiable Rules
 
-- Reference images are not templates to copy blindly; they must be decomposed into roles.
-- Final success means a complete usable deliverable plus a validation record, not only a plan, prompt set, partial batch, or skill patch.
-- For actual deliverables, the agent owns the whole loop: generate, inspect, diagnose, patch reusable rules, regenerate, and save final files.
-- Deliverables are independent generated image files; contact sheets are secondary review artifacts.
-- Final deliverables must be model-native images with no local compositing, local text overlay, local retouching, or small layout repair. Contact sheets are allowed only as secondary review artifacts after independent final files exist.
 - Product accuracy outranks reference style.
-- When a model appears in more than one output, model identity consistency is mandatory: keep the same face structure, age range, hair, styling logic, body type, skin tone, and overall presence unless the plan explicitly calls for different personas. Do not keep the same pose by default; choose poses, gestures, crops, and product interactions separately for each image's content and sales role.
-- If a clear first head-image reference exists, the first generated head image must strongly follow its layout skeleton and information format.
-- If no clear first head-image reference exists, use the default strong e-commerce first-image skeleton in `references/head-images.md`.
-- Color must be rebuilt around the product. Do not copy the reference's dominant color unless it fits the product and category.
-- A reference can provide layout, module logic, information hierarchy, and creative methods even when its color is rejected.
-- A poster/mood reference can provide the overall flavor. Default e-commerce skeletons must be bent toward that flavor, not allowed to erase it.
-- Poster flavor is a set-level constraint, not only a first-image constraint. Images 2-5 may change proof method and content role, but they should still preserve selected flavor dimensions from the same contract.
-- Every image must be visually and logically connected to its copy. Good-looking but irrelevant visuals fail.
-- Every human-product interaction must be physically and behaviorally plausible for the actual product category. Translate reference gestures into equivalent product-appropriate gestures; do not copy a hand pose, camera angle, or foreground drama if it makes the product look awkward, unsafe, impossible, or unlike how people use it.
-- Avoid mechanical repetition: do not place the same card, badge, icon row, large number, or background motif in every image unless the user explicitly asks.
-- Do not copy reference brands, logos, prices, original text, certifications, scenes, or exact product-specific claims. Do not copy reference people unless the user has chosen the reference-image model as the model source.
-- Do not make medical, therapeutic, or official certification claims unless supplied by the user.
-- Do not mistake "category-safe" for "visually generic". Safety rules restrict claims, not visual ambition.
+- **Task folder isolation (hard rule)**: every new task creates a fresh folder at `~/Desktop/YYYYMMDD-HHMM-<产品名或类别>/`. All outputs (主图, 详情页, 记录, 验证报告) live inside this folder. Never write into a folder containing files from a previous task. See `references/production-loop.md`.
+- **Copy is consumer-facing, not explanatory (hard rule)**: every line of copy (headline, sub-headline, support copy, label) is written from the consumer's perspective — what they feel, get, or stop worrying about. Never write manufacturer/explanatory/spec-sheet voice ("采用XX技术", "本产品具有XX功能", "符合XX标准", "XXX工艺打造"). See `references/visual-proof-grammar.md` Copy Voice section.
+- The visual must prove the message; do not add a model, scene, chart, macro, label, or decorative module unless it helps the viewer understand or believe the core message.
+- **Picture Solo Test (hard gate)**: every output must work with all copy covered. Before writing a prompt, write one sentence: "The picture is [concrete scene], and with all text hidden it still shows [message]." If you cannot, the picture is failing its job — redesign it before prompting.
+- **Product presence is decided by message, not by default**: the product/packaging does NOT appear in every output. It appears only when the message requires the packaging to be visible. Multi-flavor, multi-ingredient, micro-material, mechanism, sensory, scene-fit, and lifestyle-proof screens usually have NO packaging in the main visual. Use `references/message-picture-patterns.md` to decide.
+- **No icons ever**: never include icon-shaped elements that "express a selling point" (checkmarks, gear icons, lightning, shield icons, ingredient bubbles, feature pictograms, decorative arc systems). Icons added later by the user are out of skill scope. A screen is composed of: main visual + main copy + optional short support copy. It is NOT composed of: icons, icon rows, icon grids, icon bubbles, badge ribbons, or pictogram systems.
+- **Reference is language, not scene**: inherit light behavior, typography attitude, density rhythm, commercial temperature, and module rhythm from the reference. Do NOT inherit specific scene elements (fabric type, surface texture, location, background pattern). Reference scene elements may appear in at most 30% of outputs across the set; the remaining outputs must use a different main visual.
+- **Unified approval gate (hard rule)**: head images and detail pages are planned and reviewed TOGETHER. Output ONE approval table covering all 5 + 10 outputs (with draft consumer-voice copy) before any prompt is written. User approves the whole batch in one pass. Do not generate head images first and detail pages separately without a unified approval.
+- **Set-level diversity is mandatory**: 5 head images must use ≥4 distinct main visuals; 10 detail-page screens must use ≥7 distinct main visuals. "Main visual" = scene + main subject + composition family. Same main visual repeated = template failure, regenerate.
+- The product image is a source of truth, not a requirement that the whole product must dominate every screen. Some screens may be led by skin, hand interaction, body contact, macro structure, mechanism, result state, scene context, or a partial product crop when that better proves the screen's task.
+- References provide visual DNA, layout logic, proof methods, rhythm, typography attitude, and mood; they do not provide copied brands, people, claims, prices, logos, certifications, product-specific actions, OR specific scene/setting elements.
+- Detail pages are content-led and sequence-led. A reference may shape style and consistency, but each screen's message decides its composition. Detail pages are NOT vertical extensions of head images; they have their own sequence logic.
+- If the user has already defined the detail-page screen directions, preserve those directions and improve the expression inside each screen instead of inventing a new structure.
+- Every human-product interaction must be physically and behaviorally plausible for the actual product category. Translate reference action intent instead of copying poses.
+- Color is rebuilt around supplied brand colors when present, otherwise around the product identity and category. Do not copy reference dominant colors by default.
+- Avoid mechanical repetition. A coherent set should share visual DNA while varying proof method, composition, density, and product-human relationship by role.
+- Do not invent prices, official status, certifications, specs, ratings, medical effects, or unsupported performance claims.
 
 ## Output Shape
 
 Default deliverable when not directly generating:
 
-1. Reference role analysis.
-2. Flavor contract and taste-gap risks.
-3. Product-adapted color system.
-4. 5-head-image planning table.
-5. 10-detail-page planning table.
-6. 15 generation prompts: 5 head images plus 10 detail-page screens.
+1. Input and reference role analysis.
+2. Product information route and claim-safety summary.
+3. Consumer-angle map and screen-structure capture.
+4. Set-level visual DNA and color system.
+5. **Unified approval table**: 5 head images + 10 detail-page screens, each with picture solo statement, pattern match, main subject, product exposure, scene setting, and draft consumer-voice copy.
+6. Generation prompts for requested outputs.
 
 Default deliverable when directly generating:
 
-1. Brief planning summary.
-2. Generate and save 5 head images and/or 10 detail-page screens as requested, as separate final image files.
-3. Create contact sheets only as review artifacts, not replacements for the separate final files.
-4. Report saved paths and any regeneration/self-check notes.
+1. **Output the unified approval table** (5 head images + 10 detail-page screens with draft copy) and ask for user approval before any image generation. Skip only if the user explicitly says to skip review.
+2. Brief planning summary after approval or when review is skipped.
+3. Generate and save requested independent final image files into the task folder.
+4. Create contact sheets only as secondary review artifacts.
+5. Report saved paths and validation/regeneration notes.
 
 ## References
 
 Read only the needed reference files:
 
-- `references/reference-analysis.md`: classifying product/reference images and deciding what can transfer.
-- `references/color-adaptation.md`: product-first color system and anti-color-copy rules.
-- `references/head-images.md`: 5 head-image structure, including first-image layout-copy rule and default first-image skeleton.
-- `references/detail-pages.md`: 10-screen detail-page structure and prompt format.
-- `references/production-loop.md`: autonomous generation, validation, iteration, and skill feedback loop. Read this whenever producing real deliverables or validating the skill.
+- `references/input-routing.md`: product facts, documents, completeness routes, and selling-point extraction.
+- `references/reference-analysis.md`: image role classification, reference transfer, product-use plausibility, model consistency, claim safety, and the reference-is-language-not-scene rule.
+- `references/visual-dna.md`: set-level consistency, reference weighting, per-screen DNA inheritance, and set-level main-visual diversity thresholds.
+- `references/color-adaptation.md`: brand/product-first color system and anti-color-copy rules.
+- `references/visual-proof-grammar.md`: Picture Solo Test, message-first visual proof, product-presence decision, no-icon rule, consumer expression, and density rhythm.
+- `references/message-picture-patterns.md`: high-frequency message-to-picture patterns (multi-flavor, ingredients, sensory, mechanism, scene, trust, etc.) with concrete picture patterns and product-presence rules.
+- `references/head-images.md`: 5-head-image structure, 5-image main-visual diversity table, and prompt requirements.
+- `references/detail-pages.md`: fixed 10-screen/detail-page expression planning, 10-screen main-visual diversity table, approval gate, and prompt requirements.
+- `references/production-loop.md`: autonomous generation, validation, iteration, output hygiene, set-level pre-check, and skill feedback loop.
